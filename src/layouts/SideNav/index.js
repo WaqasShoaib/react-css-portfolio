@@ -1,14 +1,13 @@
 import React from 'react';
 import styles from './SideNav.module.css';
+import profilePic from '../../Assets/profile.jfif';
 
 const SideNav = () => (
   <aside className={styles.sidenav}>
     <div className={styles.profile}>
-      <img
-        src="/assets/profile.jpg"
-        alt="Profile"
-        className={styles.avatar}
-      />
+        <img src={profilePic}
+         alt="Profile"
+        className={styles.avatar} />
       <h2>Your Name</h2>
       <p>Web Developer</p>
     </div>
