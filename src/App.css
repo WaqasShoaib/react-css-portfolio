@@ -42,7 +42,6 @@ html, body {
 .content {
   flex: 1;
   padding: 10px;
-  margin-left: 20px; /* Reduced margin */
   transition: margin-left 0.3s ease;
   display: flex;
   flex-direction: column;
@@ -52,8 +51,8 @@ html, body {
 }
 
 .content-shifted {
-  margin-left: 100px;
-  width: calc(100% - 220px);
+  margin: 0;
+  
 }
 
 .centered-content {

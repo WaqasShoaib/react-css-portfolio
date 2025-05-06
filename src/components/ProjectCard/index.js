@@ -8,18 +8,7 @@ const ProjectCard = ({ title, description, imageUrl, demoLink, repoLink }) => (
     </div>
     <h3 className={styles.title}>{title}</h3>
     <p className={styles.description}>{description}</p>
-    <div className={styles.links}>
-      {demoLink && (
-        <a href={demoLink} target="_blank" rel="noopener noreferrer">
-          Live Demo
-        </a>
-      )}
-      {repoLink && (
-        <a href={repoLink} target="_blank" rel="noopener noreferrer">
-          Source Code
-        </a>
-      )}
-    </div>
+
   </div>
 );
 
