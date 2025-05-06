@@ -17,7 +17,7 @@ import {
   useMediaQuery,
   useTheme,
   Tooltip,
-  Badge
+  Avatar
 } from '@mui/material';
 
 // Icons
@@ -25,80 +25,81 @@ import HomeIcon from '@mui/icons-material/Home';
 import SchoolIcon from '@mui/icons-material/School';
 import WorkIcon from '@mui/icons-material/Work';
 import EmailIcon from '@mui/icons-material/Email';
-import MenuOpenIcon from '@mui/icons-material/MenuOpen';
+import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import StarIcon from '@mui/icons-material/Star';
+// Removed StarIcon import to fix the warning
 
-const SideNav = () => {
+const SideNav = ({ open, onClose }) => {
   const location = useLocation();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const [open, setOpen] = useState(!isMobile);
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(!isMobile);
 
   // Handle resize events
   useEffect(() => {
-    setOpen(!isMobile);
-  }, [isMobile]);
+    setIsExpanded(!isMobile && open);
+  }, [isMobile, open]);
 
   const handleDrawerToggle = () => {
+    setIsExpanded(!isExpanded);
     if (isMobile) {
-      setMobileOpen(!mobileOpen);
-    } else {
-      setOpen(!open);
+      onClose();
     }
   };
 
   const navigationItems = [
-    { text: 'Home', icon: <HomeIcon />, path: '/' },
-    { text: 'Education', icon: <SchoolIcon />, path: '/education' },
-    { text: 'Projects', icon: <WorkIcon />, path: '/projects' },
-    { text: 'Contact', icon: <EmailIcon />, path: '/contact' }
+    { text: 'Home', icon: <HomeIcon color="inherit" />, path: '/' },
+    { text: 'Education', icon: <SchoolIcon color="inherit" />, path: '/education' },
+    { text: 'Projects', icon: <WorkIcon color="inherit" />, path: '/projects' },
+    { text: 'Contact', icon: <EmailIcon color="inherit" />, path: '/contact' }
   ];
 
   const drawerContent = (
     <>
       <Box className={styles.drawerHeader}>
-        {open && (
+        {isExpanded ? (
           <IconButton 
             onClick={handleDrawerToggle}
             className={styles.collapseButton}
+            size="small"
           >
             {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
           </IconButton>
-        )}
-        {!open && !isMobile && (
+        ) : (
           <IconButton 
             onClick={handleDrawerToggle}
             className={styles.expandButton}
+            size="small"
           >
-            <MenuOpenIcon />
+            <MenuIcon />
           </IconButton>
         )}
       </Box>
       
-      <Box className={`${styles.profile} ${!open && styles.profileCollapsed}`}>
+      <Box className={`${styles.profile} ${!isExpanded && styles.profileCollapsed}`}>
         <div className={styles.avatarContainer}>
-          <img 
+          <Avatar 
             src={profilePic} 
             alt="Profile"
-            className={styles.avatar} 
+            className={styles.avatar}
+            sx={{
+              width: isExpanded ? 100 : 40,
+              height: isExpanded ? 100 : 40,
+              transition: theme.transitions.create(['width', 'height'], {
+                easing: theme.transitions.easing.sharp,
+                duration: theme.transitions.duration.leavingScreen,
+              }),
+            }}
           />
         </div>
-        {open && (
+        {isExpanded && (
           <Box className={styles.profileInfo}>
             <Typography variant="h6" className={styles.profileName}>
               Your Name
             </Typography>
             <Typography variant="body2" className={styles.profileTitle}>
-              <Badge 
-                color="success" 
-                variant="dot" 
-                sx={{ mr: 1 }}
-              >
-                <span>Web Developer</span>
-              </Badge>
+              Web Developer
             </Typography>
           </Box>
         )}
@@ -117,13 +118,29 @@ const SideNav = () => {
               to={item.path}
               key={item.text}
               className={`${styles.navItem} ${isActive ? styles.activeNavItem : ''}`}
+              sx={{
+                justifyContent: isExpanded ? 'initial' : 'center',
+                px: isExpanded ? 3 : 2.5,
+              }}
             >
-              <Tooltip title={open ? "" : item.text} placement="right" arrow>
-                <ListItemIcon className={styles.navIcon}>
+              <Tooltip title={isExpanded ? "" : item.text} placement="right" arrow>
+                <ListItemIcon 
+                  className={styles.navIcon}
+                  sx={{
+                    minWidth: 0,
+                    mr: isExpanded ? 3 : 'auto',
+                    justifyContent: 'center',
+                  }}
+                >
                   {item.icon}
                 </ListItemIcon>
               </Tooltip>
-              {open && <ListItemText primary={item.text} />}
+              {isExpanded && (
+                <ListItemText 
+                  primary={item.text} 
+                  primaryTypographyProps={{ noWrap: true }}
+                />
+              )}
             </ListItem>
           );
         })}
@@ -133,37 +150,20 @@ const SideNav = () => {
 
   return (
     <>
-      {/* Desktop permanent drawer */}
-      {!isMobile && (
-        <Drawer
-          variant="permanent"
-          open={open}
-          className={`${styles.drawer} ${open ? styles.drawerOpen : styles.drawerClose}`}
-          classes={{
-            paper: `${styles.drawerPaper} ${open ? styles.drawerOpen : styles.drawerClose}`,
-          }}
-        >
-          {drawerContent}
-        </Drawer>
-      )}
-
-      {/* Mobile temporary drawer */}
-      {isMobile && (
-        <Drawer
-          variant="temporary"
-          open={mobileOpen}
-          onClose={handleDrawerToggle}
-          className={styles.mobileDrawer}
-          classes={{
-            paper: styles.mobileDrawerPaper,
-          }}
-          ModalProps={{
-            keepMounted: true, // Better open performance on mobile
-          }}
-        >
-          {drawerContent}
-        </Drawer>
-      )}
+      <Drawer
+        variant={isMobile ? 'temporary' : 'permanent'}
+        open={isMobile ? open : true}
+        onClose={onClose}
+        className={`${styles.drawer} ${isExpanded ? styles.drawerOpen : styles.drawerClose}`}
+        classes={{
+          paper: `${styles.drawerPaper} ${isExpanded ? styles.drawerOpen : styles.drawerClose}`,
+        }}
+        ModalProps={{
+          keepMounted: true, // Better open performance on mobile
+        }}
+      >
+        {drawerContent}
+      </Drawer>
     </>
   );
 };

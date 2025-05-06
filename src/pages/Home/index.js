@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
 import { usePageTitle } from '../../context/PageTitleContext';
-import { Box, Typography, Button, Chip, Paper, Grid } from '@mui/material';
+import { Box, Typography, Button, Chip, Paper, Container } from '@mui/material';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import GitHubIcon from '@mui/icons-material/GitHub';
-import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import styles from './Home.module.css';
+import { Link as RouterLink } from 'react-router-dom';
 
 const Home = () => {
   const { setTitle } = usePageTitle();
@@ -13,17 +12,16 @@ const Home = () => {
   }, [setTitle]);
 
   return (
-    <section className={styles.container}>
+    <Container maxWidth="lg" className={styles.container}>
       <div className={styles.content}>
         <Box className={styles.headline}>
           <Typography variant="overline" className={styles.greeting}>
             Welcome to my portfolio
           </Typography>
-          <Typography variant="h1" className={styles.title}>
-            Hello, I'm <span className={styles.name}>John Doe</span>
-            <span className={styles.cursor}>|</span>
+          <Typography variant="h3" className={styles.title}>
+            Hello, I'm <span className={styles.name}>Waqas Shoaib</span>
           </Typography>
-          <Typography variant="h2" className={styles.subtitle}>
+          <Typography variant="h5" className={styles.subtitle}>
             Full Stack Developer & Computer Science Graduate
           </Typography>
           
@@ -31,6 +29,19 @@ const Home = () => {
             Passionate about building elegant, user-centric applications with modern technologies.
             I specialize in creating responsive web applications with a focus on performance and accessibility.
           </Typography>
+
+          <div className={styles.buttonGroup}>
+          <Button 
+  variant="contained" 
+  color="primary" 
+  className={styles.ctaButton}
+  endIcon={<ArrowForwardIcon />}
+  component={RouterLink}
+  to="/projects"
+>
+  View My Work
+</Button>
+          </div>
         </Box>
         
         <Box className={styles.techSection}>
@@ -38,9 +49,9 @@ const Home = () => {
             My Technology Stack
           </Typography>
           
-          <Grid container spacing={3}>
-            <Grid item xs={12} sm={6}>
-              <Paper elevation={0} className={styles.skillCard}>
+          <div className={styles.skillsRow}>
+            <div style={{ width: '49%' }}>
+              <Paper elevation={1} className={styles.skillCard}>
                 <Typography variant="subtitle1" className={styles.cardTitle}>
                   Core Technologies
                 </Typography>
@@ -53,10 +64,10 @@ const Home = () => {
                   <Chip label="HTML/CSS" className={styles.techChip} />
                 </div>
               </Paper>
-            </Grid>
+            </div>
             
-            <Grid item xs={12} sm={6}>
-              <Paper elevation={0} className={styles.skillCard}>
+            <div style={{ width: '49%' }}>
+              <Paper elevation={1} className={styles.skillCard}>
                 <Typography variant="subtitle1" className={styles.cardTitle}>
                   Currently Exploring
                 </Typography>
@@ -68,11 +79,11 @@ const Home = () => {
                   <Chip label="Machine Learning" className={styles.techChip} />
                 </div>
               </Paper>
-            </Grid>
-          </Grid>
+            </div>
+          </div>
         </Box>
       </div>
-    </section>
+    </Container>
   );
 };
 

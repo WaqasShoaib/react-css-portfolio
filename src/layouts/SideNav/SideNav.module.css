@@ -1,218 +1,154 @@
 .drawer {
-    width: 250px;
-    flex-shrink: 0;
-    white-space: nowrap;
-    transition: width 0.3s ease, background 0.3s ease;
-  }
-  
-  .drawerOpen {
-    width: 250px;
-    transition: width 0.3s ease;
-  }
-  
-  .drawerClose {
-    width: 65px;
-    transition: width 0.3s ease;
-    overflow-x: hidden;
-  }
-  
-  .drawerPaper {
-    background: linear-gradient(135deg, var(--color-sidebar-bg, #121212) 0%, rgba(30, 30, 50, 1) 100%);
-    color: var(--color-sidebar-text, #ffffff);
-    border-right: 1px solid rgba(255, 255, 255, 0.08);
-    overflow-x: hidden;
-    position: fixed;
-    height: 100vh;
-    z-index: 1000;
-    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
-  }
-  
-  .mobileDrawer {
-    width: 250px;
-    flex-shrink: 0;
-  }
-  
-  .mobileDrawerPaper {
-    width: 250px;
-    background: var(--color-sidebar-bg, #121212);
-    color: var(--color-sidebar-text, #ffffff);
-  }
-  
-  .drawerHeader {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    padding: 0.5rem;
-    min-height: 56px;
-  }
-  
-  .collapseButton, .expandButton {
-    color: var(--color-sidebar-text, #ffffff) !important;
-  }
-  
-  .expandButton {
-    margin-left: auto;
-    margin-right: auto;
-  }
-  
-  .profile {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 1.5rem 1rem;
-    transition: padding 0.25s ease;
-  }
-  
-  .profileCollapsed {
-    padding: 1rem 0;
-  }
-  
-  .avatar {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-bottom: 1rem;
-    border: 3px solid var(--color-primary, #3f51b5);
-    box-shadow: 0 0 15px rgba(63, 81, 181, 0.5);
-    transition: all 0.4s ease;
-    position: relative;
-    z-index: 1;
-    animation: pulseGlow 3s infinite alternate;
-  }
-  
-  @keyframes pulseGlow {
-    0% {
-      box-shadow: 0 0 5px rgba(63, 81, 181, 0.5);
-      transform: scale(1);
-    }
-    100% {
-      box-shadow: 0 0 20px rgba(63, 81, 181, 0.8);
-      transform: scale(1.05);
-    }
-  }
-  
-  .avatar::after {
-    content: '';
-    position: absolute;
-    top: -5px;
-    left: -5px;
-    right: -5px;
-    bottom: -5px;
-    border-radius: 50%;
-    border: 2px solid transparent;
-    border-top-color: var(--color-secondary, #f50057);
-    border-bottom-color: var(--color-primary, #3f51b5);
-    animation: spinBorder 8s linear infinite;
-    z-index: -1;
-  }
-  
-  @keyframes spinBorder {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
-  }
-  
-  .drawerClose .avatar {
-    width: 40px;
-    height: 40px;
-    margin-bottom: 0.5rem;
-  }
-  
-  .profileInfo {
-    text-align: center;
-    width: 100%;
-  }
-  
-  .profileName {
-    font-size: 1.2rem !important;
-    font-weight: 600 !important;
-    margin-bottom: 0.25rem !important;
-    color: var(--color-sidebar-text, #ffffff) !important;
-  }
-  
-  .profileTitle {
-    color: var(--color-sidebar-text-muted, #b0b0b0) !important;
-    font-size: 0.9rem !important;
-  }
-  
-  .divider {
-    background-color: rgba(255, 255, 255, 0.12) !important;
-    margin: 0.5rem 0 !important;
-  }
-  
-  .navList {
-    padding: 0.5rem 0 !important;
-    width: 100%;
-  }
-  
-  .navItem {
-    margin: 0.5rem 0.5rem !important;
-    border-radius: 8px !important;
-    transition: all 0.3s ease !important;
-    overflow: hidden;
-    position: relative;
-  }
-  
-  .navItem::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 3px;
-    height: 100%;
-    background: var(--color-primary, #3f51b5);
-    transform: scaleY(0);
-    transition: transform 0.3s ease;
-  }
-  
-  .navItem:hover {
-    background-color: rgba(255, 255, 255, 0.08) !important;
-    transform: translateX(5px);
-  }
-  
-  .navItem:hover::before {
-    transform: scaleY(1);
-  }
-  
-  .activeNavItem {
-    background-color: rgba(63, 81, 181, 0.2) !important;
-    position: relative;
-  }
-  
-  .activeNavItem::before {
-    transform: scaleY(1);
-  }
-  
-  .activeNavItem::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 3px;
-    height: 100%;
-    background: var(--color-secondary, #f50057);
-  }
-  
-  .navIcon {
-    min-width: 40px !important;
-    color: var(--color-sidebar-text, #ffffff) !important;
-    display: flex !important;
-    justify-content: center !important;
-  }
-  
-  /* Provide content space for when drawer is open in desktop mode */
-  @media (min-width: 769px) {
-    .contentShift {
-      margin-left: 250px;
-      transition: margin 0.25s ease;
-    }
-    
-    .contentShiftCollapsed {
-      margin-left: 65px;
-      transition: margin 0.25s ease;
-    }
-  }
+  width: 250px;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.drawerOpen {
+  width: 250px;
+  transition: width 0.3s ease;
+}
+
+.drawerClose {
+  width: 70px;
+  transition: width 0.3s ease;
+  overflow-x: hidden;
+}
+
+.drawerPaper {
+  background-color: #f8f9fa;
+  color: #333333;
+  border-right: 1px solid #e0e0e0;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
+  padding-top: 10px;
+  overflow-x: hidden;
+}
+
+.drawerHeader {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 8px;
+  min-height: 56px;
+}
+
+.collapseButton, .expandButton {
+  color: #666666;
+  margin-right: 12px;
+}
+
+.collapseButton:hover, .expandButton:hover {
+  color: #333333;
+}
+
+.profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 0;
+  transition: padding 0.3s ease;
+}
+
+.profileCollapsed {
+  padding: 10px 0;
+}
+
+.avatarContainer {
+  position: relative;
+  margin-bottom: 15px;
+  transition: transform 0.3s ease;
+}
+
+.avatarContainer:hover {
+  transform: scale(1.05);
+}
+
+.avatar {
+  border: 3px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease !important;
+}
+
+.avatar:hover {
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+  border-color: var(--color-primary);
+}
+
+.profileInfo {
+  text-align: center;
+  transition: opacity 0.3s ease;
+}
+
+.profileName {
+  color: #333333;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.profileTitle {
+  color: #666666;
+  font-size: 0.85rem;
+}
+
+.divider {
+  background-color: #e0e0e0;
+  margin: 8px 16px;
+}
+
+.navList {
+  padding: 0;
+}
+
+.navItem {
+  margin: 5px 8px;
+  border-radius: 8px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  height: 48px;
+}
+
+.navItem:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+.activeNavItem {
+  background-color: rgba(63, 81, 181, 0.08);
+  position: relative;
+}
+
+.activeNavItem::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 4px;
+  background-color: var(--color-primary);
+  border-radius: 0 2px 2px 0;
+}
+
+.navIcon {
+  color: #666666;
+  transition: color 0.2s ease;
+}
+
+.activeNavItem .navIcon,
+.navItem:hover .navIcon {
+  color: #3f51b5;
+}
+
+/* Custom scrollbar for the sidebar */
+.drawerPaper::-webkit-scrollbar {
+  width: 4px;
+}
+
+.drawerPaper::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.drawerPaper::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+
+.drawerPaper::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(0, 0, 0, 0.3);
+}
